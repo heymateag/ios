@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="COExpirationCell" id="gf0-9r-tOe" customClass="COExpirationCell" customModule="Paymate">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="101"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gf0-9r-tOe" id="SCu-3Y-pZ5">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="101"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PcP-MN-3vZ">
+                        <rect key="frame" x="20" y="16" width="374" height="69"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hlU-PI-ZwK">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="expiration" translatesAutoresizingMaskIntoConstraints="NO" id="veP-ou-KdT">
+                                        <rect key="frame" x="0.0" y="0.0" width="19" height="20.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Expiration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZS0-CO-WI2">
+                                        <rect key="frame" x="35" y="0.0" width="339" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="86h-oT-WIL">
+                                <rect key="frame" x="0.0" y="28.5" width="374" height="40.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j6w-t8-M27">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="40.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="FKC-jA-aCP"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNa-mN-1I2">
+                                        <rect key="frame" x="35" y="0.0" width="339" height="40.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                        <state key="normal" title="2021-15-10">
+                                            <color key="titleColor" red="0.3294117647" green="0.65490196079999996" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PcP-MN-3vZ" firstAttribute="leading" secondItem="SCu-3Y-pZ5" secondAttribute="leading" constant="20" id="CGV-jN-g1c"/>
+                    <constraint firstItem="PcP-MN-3vZ" firstAttribute="top" secondItem="SCu-3Y-pZ5" secondAttribute="top" constant="16" id="DTb-6o-hft"/>
+                    <constraint firstAttribute="trailing" secondItem="PcP-MN-3vZ" secondAttribute="trailing" constant="20" id="HQ5-6p-jir"/>
+                    <constraint firstAttribute="bottom" secondItem="PcP-MN-3vZ" secondAttribute="bottom" constant="16" id="Nfz-bp-WnC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="btnExpiry" destination="PNa-mN-1I2" id="5lY-LU-Gd4"/>
+                <outlet property="detailsSv" destination="86h-oT-WIL" id="G7o-rJ-pEF"/>
+            </connections>
+            <point key="canvasLocation" x="182.60869565217394" y="114.84375"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="expiration" width="19" height="21"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

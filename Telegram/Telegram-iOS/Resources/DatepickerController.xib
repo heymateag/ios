@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DatePickerViewController" customModule="Paymate">
+            <connections>
+                <outlet property="doneBarButton" destination="cPQ-TG-LOQ" id="Lg4-U6-HWx"/>
+                <outlet property="mDatePicker" destination="Ote-PA-KNh" id="Hik-Mb-SZb"/>
+                <outlet property="mNavigationBar" destination="ijY-ez-LlQ" id="SDQ-fD-sVk"/>
+                <outlet property="view" destination="HXq-m7-c2d" id="gb0-xH-646"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="HXq-m7-c2d">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ijY-ez-LlQ">
+                    <rect key="frame" x="0.0" y="296" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Og1-qM-Mff"/>
+                    </constraints>
+                    <items>
+                        <navigationItem title="Title" id="Ot8-9s-tYN">
+                            <barButtonItem key="leftBarButtonItem" title="Cancel" id="dC6-nL-ApP">
+                                <connections>
+                                    <action selector="onCancelDatePicker:" destination="-1" id="8ap-dI-ccp"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Done" id="cPQ-TG-LOQ">
+                                <connections>
+                                    <action selector="onConfirmDateSelection:" destination="-1" id="9aG-e0-3q0"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5UP-DE-JZM">
+                    <rect key="frame" x="0.0" y="340" width="414" height="216"/>
+                    <subviews>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ote-PA-KNh">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </datePicker>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Ote-PA-KNh" firstAttribute="leading" secondItem="5UP-DE-JZM" secondAttribute="leading" id="8zQ-7G-628"/>
+                        <constraint firstAttribute="trailing" secondItem="Ote-PA-KNh" secondAttribute="trailing" id="D8f-cV-pC2"/>
+                        <constraint firstAttribute="bottom" secondItem="Ote-PA-KNh" secondAttribute="bottom" id="PwD-t1-POc"/>
+                        <constraint firstItem="Ote-PA-KNh" firstAttribute="top" secondItem="5UP-DE-JZM" secondAttribute="top" id="aaa-u5-b46"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="v6B-c3-mSJ"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="5UP-DE-JZM" firstAttribute="top" secondItem="ijY-ez-LlQ" secondAttribute="bottom" id="3ma-PI-sve"/>
+                <constraint firstItem="ijY-ez-LlQ" firstAttribute="leading" secondItem="v6B-c3-mSJ" secondAttribute="leading" id="6GG-1d-6Mv"/>
+                <constraint firstItem="5UP-DE-JZM" firstAttribute="leading" secondItem="v6B-c3-mSJ" secondAttribute="leading" id="YU1-s1-Drz"/>
+                <constraint firstItem="5UP-DE-JZM" firstAttribute="centerX" secondItem="HXq-m7-c2d" secondAttribute="centerX" id="hye-vJ-nEt"/>
+                <constraint firstItem="5UP-DE-JZM" firstAttribute="trailing" secondItem="v6B-c3-mSJ" secondAttribute="trailing" id="pTu-NG-oeL"/>
+                <constraint firstItem="5UP-DE-JZM" firstAttribute="centerY" secondItem="HXq-m7-c2d" secondAttribute="centerY" id="sQH-Yh-9Rk"/>
+                <constraint firstItem="ijY-ez-LlQ" firstAttribute="trailing" secondItem="v6B-c3-mSJ" secondAttribute="trailing" id="tzo-zg-amV"/>
+            </constraints>
+            <point key="canvasLocation" x="-803" y="248"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

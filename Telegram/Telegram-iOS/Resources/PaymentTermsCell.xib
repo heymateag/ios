@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OfferDetailsTermsCell" rowHeight="54" id="8Tz-aX-PH4" customClass="OfferDetailsTermsCell" customModule="Paymate">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Tz-aX-PH4" id="R6t-6V-t94">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVy-ko-APa">
+                        <rect key="frame" x="16" y="16" width="343" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVB-Bo-I7H">
+                        <rect key="frame" x="367" y="8" width="31" height="38"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.50588235294117645" green="0.52549019607843139" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gVB-Bo-I7H" firstAttribute="centerY" secondItem="R6t-6V-t94" secondAttribute="centerY" id="5Bz-kT-0E9"/>
+                    <constraint firstItem="qVy-ko-APa" firstAttribute="leading" secondItem="R6t-6V-t94" secondAttribute="leading" constant="16" id="GJC-zI-Ney"/>
+                    <constraint firstAttribute="bottom" secondItem="qVy-ko-APa" secondAttribute="bottom" constant="16" id="GnT-rb-boA"/>
+                    <constraint firstAttribute="bottom" secondItem="gVB-Bo-I7H" secondAttribute="bottom" constant="8" id="Kh5-3h-lDq"/>
+                    <constraint firstAttribute="trailing" secondItem="gVB-Bo-I7H" secondAttribute="trailing" constant="16" id="dNy-co-aWT"/>
+                    <constraint firstItem="gVB-Bo-I7H" firstAttribute="leading" secondItem="qVy-ko-APa" secondAttribute="trailing" constant="8" id="g4d-cr-vRf"/>
+                    <constraint firstItem="qVy-ko-APa" firstAttribute="top" secondItem="R6t-6V-t94" secondAttribute="top" constant="16" id="nfV-dH-tRh"/>
+                    <constraint firstItem="gVB-Bo-I7H" firstAttribute="centerY" secondItem="qVy-ko-APa" secondAttribute="centerY" id="w0M-hJ-76o"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="penality" destination="gVB-Bo-I7H" id="M5V-DS-Qv7"/>
+                <outlet property="termName" destination="qVy-ko-APa" id="t7x-Lg-3Bh"/>
+            </connections>
+            <point key="canvasLocation" x="153.62318840579712" y="-52.901785714285715"/>
+        </tableViewCell>
+    </objects>
+</document>

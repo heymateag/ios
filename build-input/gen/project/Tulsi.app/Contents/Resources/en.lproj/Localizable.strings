@@ -1,0 +1,276 @@
+/*
+  Strings for the Tulsi application.
+*/
+
+/* Error when the Aspect returns multiple RuleEntries for a given target. The target label is in %1$@, the rule type is in %2$@. */
+"AmbiguousBuildTarget" = "Multiple configurations found for target %1$@. Is this %2$@ being built at the root level? Or do you have a root-level library somewhere that depends on this target?";
+
+/* Message to show at the top of the Tulsi project save as panel, explaining what to do. */
+"Document_SelectTulsiProjectOutputFolderMessage" = "Select a location to save this Tulsi project.";
+
+/* General error when project does not have a valid Bazel workspace. */
+"Error_BadWorkspace" = "Project does not contain a valid Bazel workspace. Start a new project or ensure that a WORKSPACE file exists.";
+
+/* Error when project does not have a valid Bazel WORKSPACE file at %1$@. */
+"Error_NoWORKSPACEFile" = "Project does not contain a valid Bazel workspace. Start a new project or ensure that a WORKSPACE file exists at \"%1$@\".";
+
+/* Error when a TulsiGeneratorConfig named %1$@ could not be deleted. */
+"Error_ConfigDeleteFailed" = "Failed to remove Tulsi generator config '%1$@'.";
+
+/* Error when a TulsiGeneratorConfig failed to be reloaded. */
+"Error_ConfigLoadFailed" = "Failed to reload Tulsi generator config.";
+
+/* Error when a TulsiGeneratorConfig failed to save. Details are provided as %1$@. */
+"Error_ConfigSaveFailed" = "Failed to save Tulsi generator config. Debug info: %1$@";
+
+/* A general, critical failure without a more fitting descriptive message. */
+"Error_GeneralCriticalFailure" = "An unexpected error occurred.";
+
+/* A general, critical failure during project generation. */
+"Error_GeneralProjectGenerationFailure" = "Failed to create Xcode project.";
+
+/* Error for a generation attempt without a valid target output folder even though one should exist. */
+"Error_NoOutputFolder" = "No output folder selected. This is likely a Tulsi bug, please report.";
+
+/* Error when unable to find the Bazel executable. */
+"Error_ResolveBazelPathFailure" = "Unable to locate your Bazel executable.";
+
+/* Message to show at the top of WORKSPACE file selector sheet, explaining what to do. */
+"NewProject_SetProjectWorkspaceMessage" = "Select the location of the Bazel \"WORKSPACE\" file for this project.";
+
+/* Label for the button used to confirm the selected WORKSPACE. */
+"NewProject_SetProjectWorkspacePrompt" = "Select";
+
+/* Message to show at the top of tulsiproj open panel, explaining what to do. */
+"OpenProject_OpenProjectPanelMessage" = "Choose a Tulsi project to open.";
+
+/* Short header shown before the project in the options editor's target selector. */
+"OptionsTarget_ProjectSectionTitle" = "PROJECT";
+
+/* Short header shown before the build targets in the options editor's target selector. */
+"OptionsTarget_TargetSectionTitle" = "TARGETS";
+
+/* String to show in the options editor's 'default' column when there is no default value. */
+"OptionsEditor_NoDefault" = "<none>";
+
+/* String to show in the option editor for group nodes when there are multiple per-config values. */
+"OptionsEditor_MultipleValues" = "<Multiple values>";
+
+/* Value to show when a boolean option is 'true'. This should match Xcode's localization. */
+"OptionsEditor_TrueValue" = "Yes";
+
+/* Value to show when a boolean option is 'false'. This should match Xcode's localization. */
+"OptionsEditor_FalseValue" = "No";
+
+/* Title for the options editor column used to edit per-config values. */
+"OptionsEditor_ColumnTitle_Config" = "Config";
+
+/* Title for the options editor column used to display the built-in default values. */
+"OptionsEditor_ColumnTitle_Default" = "Default";
+
+/* Title for the options editor column used to edit per-tulsiproj values. */
+"OptionsEditor_ColumnTitle_Project" = "Project";
+
+/* Label for the button used to confirm adding the selected BUILD file to the Tulsi project. */
+"ProjectEditor_AddBUILDFilePrompt" = "Add";
+
+/* Title for a button that will cancel an operation that requires that all opened TulsiGeneratorConfig documents be closed. */
+"ProjectEditor_CloseOpenedConfigDocumentsButtonCancel" = "Cancel";
+
+/* Title for a button that will proceed with an operation that requires that all opened TulsiGeneratorConfig documents be closed. */
+"ProjectEditor_CloseOpenedConfigDocumentsButtonOK" = "OK";
+
+/* Message asking the user if they want to continue with an operation that requires that all opened TulsiGeneratorConfig documents be closed. */
+"ProjectEditor_CloseOpenedConfigDocumentsMessage" = "All open configuration editors will be closed. Continue?";
+
+/* Message to show at the top of the Bazel selector sheet, explaining what to do. */
+"ProjectEditor_SelectBazelPathMessage" = "Select the bazel binary to use.";
+
+/* Label for the button used to confirm the selected Bazel file in the Bazel selector sheet. */
+"ProjectEditor_SelectBazelPathPrompt" = "Select";
+
+/* Title for open panel through which the user should select where to generate the Xcode project. */
+"ProjectGeneration_SelectProjectOutputFolderTitle" = "Project output folder";
+
+/* Message to show at the top of the Xcode output folder sheet, explaining what to do. */
+"ProjectGeneration_SelectProjectOutputFolderMessage" = "Select the folder into which the Xcode project should be generated.";
+
+/* Label for the button used to confirm the selected output folder for the generated Xcode project. */
+"ProjectGeneration_SelectProjectOutputFolderAndGeneratePrompt" = "Generate";
+
+/* Error message for when the user tried to generate an Xcode project from an incomplete config. */
+"TulsiError_ConfigNotGenerateable" = "Generator config is not fully populated and cannot generate an Xcode project.";
+
+/* Error message for when a generator config fails to load for an unspecified reason. */
+"TulsiError_ConfigNotLoadable" = "Generator config could not be loaded from the given location.";
+
+/* Error message for when a generator config fails to save because it is missing critical information. */
+"TulsiError_ConfigNotSaveable" = "Generator config is not fully populated and cannot be saved.";
+
+/* A generic exception was thrown, additional debug data is in %1$@. */
+"TulsiError_General" = "Error: '%1$@'";
+
+/* A non-critical failure to restore some Bazel labels when loading a document. Details are provided as %1$@. */
+"Warning_LabelResolutionFailed" = "Failed to reload some Bazel targets. The loaded project may be incorrect. Debug info: %1$@";
+
+/* Label for action button to be used to go to the final page in the project wizard. */
+"Wizard_SaveConfig" = "Save";
+
+/* Label for action button to be used to go to the next page in the project wizard. */
+"Wizard_Next" = "Next";
+
+
+/* Strings mapping progress item notification names to user-friendly names */
+
+/* Sent when the Tulsi generator is gathering source/settings for Xcode indexer targets. */
+"gatheringIndexerSources" = "Gathering sources for Xcode indexers";
+
+/* Sent when creating Xcode build targets. */
+"generatingBuildTargets" = "Generating build targets";
+
+/* Sent when creating Xcode indexer targets. */
+"generatingIndexerTargets" = "Generating indexer libraries";
+
+/* Sent when the Tulsi generator is copying the build scripts into the output Xcode project. */
+"installingScripts" = "Installing build scripts";
+
+/* Sent when the Tulsi generator is copying the build utilities into the output Xcode project. */
+"installingUtilities" = "Installing build utilities";
+
+/* Sent when the Tulsi generator is copying the generator config into the output Xcode project. */
+"installingGeneratorConfig" = "Installing generator config";
+
+/* Sent when starting to serialize the Xcode project. */
+"serializingXcodeProject" = "Creating Xcode project";
+
+/* Sent when extracting source files from a Bazel project. */
+"sourceFileExtraction" = "Extracting source files";
+
+/* Sent when the Tulsi generator is extracting workspace information. */
+"workspaceInfoExtraction" = "Retrieving workspace info";
+
+
+
+/*
+  Strings for the Tulsi Xcode project generator.
+*/
+
+/* Error when unable to resolve which RuleEntry is a dep of another based on DeploymentTargets. The target label is in %1$@. */
+"AmbiguousRuleEntryReference" = "Unable to resolve proper configuration for target %1$@. Do you have a root-level library target set as a build target? Please check your Tulsi Config settings to make sure that no library targets are selected.";
+
+/* Error to show when tulsi_supported_targets_aspect produced data that could not be parsed. The artifact filename is in %1$@, additional information is in %2$@. */
+"BazelAspectSupportedTargetParsingFailed" = "Failed to parse information about supported target in '%1$@'. This is a Tulsi or Bazel bug, please report. Debug info: %2$@";
+
+/* Error to show as an alert when the output generated by an aspect failed in some way. Details about the failure are available in the message log. */
+"BazelAspectParsingFailedNotification" = "Failed to retrieve information about one or more targets. See the message log for details.";
+
+/* Error to show when the bazel binary cannot be found at the previously saved location %1$@. */
+"BazelBinaryNotFound" = "Bazel could not be found at \"%1$@\". Please update the path in the project file.";
+
+/* Message to show when the bazel bin symlink name was not able to be extracted from the workspace. */
+"BazelBinSymlinkNameNotFound" = "Was not able to extract the bazel bin symlink name from the workspace. This is a Tulsi or Bazel bug, please report.";
+
+/* Error message for when a Bazel extractor did not complete successfully. Details are logged separately. */
+"BazelInfoExtractionFailed" = "Failed to retrieve information about the Bazel workspace. This usually means that the contents of a BUILD file are incorrect or flags are missing. Read the message log carefully for details.";
+
+/* Bazel response XML element %1$@ should have a valid string value but does not. */
+"BazelResponseLabelAttributeInvalid" = "Bazel query returned an invalid, non-string convertible list element '%1$@'. This may be a Bazel bug or a BUILD file issue.";
+
+/* Bazel response XML element %1$@ was found but was missing an attribute named %2$@. */
+"BazelResponseMissingRequiredAttribute" = "Missing expected attribute named '%2$@' on element '%1$@'. This is a Tulsi or Bazel bug, please report.";
+
+/* General error to show when the XML parser returns something other than an NSXMLElement. This should never happen in practice. */
+"BazelResponseXMLNonElementType" = "Non element unexpectedly returned for query. This is a Tulsi bug, please report.";
+
+/* Extractor Bazel output failed to be parsed as XML with error %1$@. This may be a Bazel bug or a bad BUILD file. */
+"BazelResponseXMLParsingFailed" = "Bazel response XML parsing failed with error '%1$@'. This may be a Bazel bug or a BUILD file issue.";
+
+/* Extracting path info from bazel failed. The exit code is %1$d. */
+"BazelWorkspaceInfoQueryFailed" = "Failed to query information about the Bazel workspace. Bazel exited with code %1$d";
+
+/* Bazel 'buildfiles' query failed to extract information. */
+"BazelBuildfilesQueryFailed" = "Failed to query information about build files for this Bazel workspace. Skylark files and some BUILD files may be omitted from the project.";
+
+/* Error when parsing a Bazel Build Event for BEP when running Bazel. */
+"BazelParseBuildEventFailed" = "Failed to parse a Bazel Build Event. This may be a Tulsi bug, please report. Additional Context: %1$@";
+
+/* Warning when a failure occurred while attempting to bootstrap the user's LLDBInit file. */
+"BootstrapLLDBInitFailed" = "Failed to bootstrap LLDBInit file, bootstrapping script returned error code %1$d, %2$@.";
+
+/* Warning when a failure occurred while cleaning dSYMs in the SQLite store used by the DBGShellCommands script. */
+"CleanCachedDsymsFailed" = "Failed to clean cache of dSYMs, clean script returned error code %1$d, %2$@.";
+
+/* Failed to copy an important file resource, the resulting project will most likely be broken. A bug should be reported. */
+"CopyingResourceFailed" = "Failed to copy project resource '%1$@' to '%2$@'. The generated project will probably malfunction, please report. Error: %3$@";
+
+/* Failed to create folders for generated artifacts %1$@. The generated Xcode project may need to be reloaded after the first build. */
+"CreatingGeneratedArtifactFoldersFailed" = "Failed to pre-create folders for generated artifacts. The generated project may need to be reloaded manually after the first build. Failed paths: %1$@";
+
+/* Provides general information about a Bazel command; a more detailed error may be reported elsewhere. The Bazel command is %1$@, exit code is %2$d, stderr %3$@. */
+"DebugInfoForBazelCommand" = "Bazel command info:\n%1$@\nExited with code %2$d\n\n%3$@";
+
+/* A RuleEntry that depends on another did not have a DeploymentTarget set. The RuleEntry's label is %1$@, the dep's label is in %2$@. */
+"DependentRuleEntryHasNoDeploymentTarget" = "Error resolving RuleEntry dep. Target %1$@ depends on %2$@ yet it does not have a DeploymentTarget set. Please report this as a Tulsi bug.";
+
+/* Failed to create an important directory. The resulting project will most likely be broken. A bug should be reported. */
+"DirectoryCreationFailed" = "Failed to create directory '%1$@'. The generated project will probably malfunction, please report. Error: %2$@";
+
+/* We have multiple identical RuleEntries, meaning they have the same BuildLabel and Deployment Target. The RuleEntry's label is %1$@, the DeploymentTarget is in %2$@. */
+"DuplicateRuleEntries" = "Multiple entries were found for target %1$@ with a deployment target of %2$@. This may be due to building this target at the top-level as well as a transitive dep of a different top-level target. You may experience some issues with this target in the generated Xcode project. This may be hard to debug, please report.";
+
+/* Message to show when the execution root was not able to be extracted from the workspace. */
+"ExecutionRootNotFound" = "Was not able to extract the execution root from the workspace. This is a Tulsi or Bazel bug, please report.";
+
+/* Message to show when unable to extract the default swift version from xcrun. */
+"ExtractingDefaultSwiftVersionFailed" = "Unable to extract default swift version from xcrun. Defaulting to swift version %1$@. Additional error context: %2$@.";
+
+/* Failed to readString from FileLineReader when handling the BEP file. */
+"FileLineReaderReadStringFailed" = "Failed to readString from the BEP JSON file. This is a Tulsi or Bazel bug, please report.";
+
+/* Failed to find a watchOS application extension with the given name. The project will not be able to launch the watch app. */
+"FindingWatchExtensionFailed" = "Failed to find watchOS extension '%1$@'. The generated project will not able to run the watch app.";
+
+/* Message to show when we are not able to generate the Python script containing the project's Bazel build settings. */
+"GeneratingBazelBuildSettingsFailed" = "Could not generate a script that contains the build settings for the project. This is a Tulsi bug, please report. Additional error context: %1$@";
+
+/* Message to show when loading a .xccurrentversion file fails. */
+"LoadingXCCurrentVersionFailed" = "Failed to determine the current version for a versioned group %1$@. The generated project may malfunction. Error: %2$@";
+
+/* Warning to show when a user has selected an XCTest but not its host application. */
+"MissingTestHost" = "Failed to link test target '%1$@' to its host, '%2$@'. This test will not be runnable in the generated Xcode project.";
+
+/* Warning when multiple bundled targets have different minimum OS versions. Platform type in %1$@, context in %2$@. */
+"MultiMinOSVersions" = "You have multiple top-level %1$@ bundle targets (e.g. applications or tests) with different minimum %1$@ versions.\nUnless this is intentional (e.g. due to extension or API restrictions where a different version is needed for some targets), we strongly advise you to use a single minimum OS version for these targets in order to save Bazel build time and Xcode indexing time. You can fix this by setting a single `minimum_os_version` attribute on all of the targets mentioned below:\n------------------------\n%2$@\n------------------------";
+
+/* Warning to show when a RuleEntry does not have a DeploymentTarget to be used by the indexer. */
+"NoDeploymentTarget" = "Target %1$@ has no DeploymentTarget set. Defaulting to iOS 9. This is an unexpected problem and should be reported as a Tulsi bug.";
+
+/* Message to show when the output base was not able to be extracted from the workspace. */
+"OutputBaseNotFound" = "Was not able to extract the output base from the workspace. This is a Tulsi or Bazel bug, please report.";
+
+/* Warning shown when none of the tests of a test suite %1$@ were able to be resolved. */
+"TestSuiteHasNoValidTests" = "Failed to resolve any tests for test_suite '%1$@', no scheme will be generated.";
+
+/* Warning shown when a non XCTest %1$@ is included in a test suite %2$@ and will be ignored. */
+"TestSuiteIncludesNonXCTest" = "test_suite '%2$@' includes non-xctest '%1$@'. Xcode test schemes cannot include targets of this type so it will be ignored when running the suite.";
+
+/* Warning shown when the test host for a test %1$@ inside test suite %2$@ could not be found. The test will be ignored, but this state is unexpected and should be reported. */
+"TestSuiteTestHostResolutionFailed" = "Failed to resolve host for test '%1$@', it will be ignored in test_suite '%2$@'. This is an unexpected problem and should be reported as a Tulsi bug.";
+
+/* Warning shown when a test_suite %1$@ refers to a test label %2$@ that was not resolved and will be ignored */
+"TestSuiteUsesUnresolvedTarget" = "Test suite '%1$@' refers to test '%2$@' which failed to load. The test will be ignored when running the suite.";
+
+/* Failure to look up a Bazel target that was expected to be present. The target label is %1$@ */
+"UnknownTargetRule" = "Failed to load information for Bazel target '%1$@'. This may be a Bazel bug or a BUILD file issue.";
+
+/* Warning shown when generation of an Xcode scheme failed for build target %1$@ */
+"XCSchemeGenerationFailed" = "Failed to resolve target '%1$@', skipping scheme generation.";
+
+/* Warning shown when generating an Xcode schema for target %1$@ which uses unsupported legacy ios_extension rule */
+"LegacyIOSExtensionNotSupported" = "iOS extension %1$@ is using legacy packaging rules which is not supported. Please migrate to the new rules.";
+
+/* Warning when updating the user's DBGShellCommands script in ~/Library/Application Support/Tulsi failed. */
+"UpdatingDBGShellCommandsFailed" = "Failed to update the DBGShellCommands script used to locate dSYM bundles: received error '%1$@'.";
+
+/* Warning shown when failing to update the tulsi symlinks into the Bazel output files. symlink path is in %1$@, symlink destination is in %2$@, additional error context in %3$@. */
+"UpdatingTulsiSymlinksFailed" = "Failed to update the %1$@ symlink to %2$@. Additional context: %3$@";

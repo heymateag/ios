@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChooseScheduleViewController" customModule="Paymate">
+            <connections>
+                <outlet property="scheduleTableView" destination="SVE-Ob-nss" id="RsW-xy-AzE"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Kui-Eb-LKW"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SVE-Ob-nss">
+                    <rect key="frame" x="20" y="269" width="374" height="358"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="AJh-1N-v41"/>
+                        <outlet property="delegate" destination="-1" id="rcY-SW-x4i"/>
+                    </connections>
+                </tableView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7a-9c-f86">
+                    <rect key="frame" x="20" y="225" width="374" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="MLu-nr-itn"/>
+                    </constraints>
+                    <items>
+                        <navigationItem title="Choose Schedule" id="k7d-xg-UcL">
+                            <barButtonItem key="leftBarButtonItem" title="Cancel" id="5CK-Cn-rPx">
+                                <connections>
+                                    <action selector="onCancelNavBtn:" destination="-1" id="Xi5-6o-SrE"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SVE-Ob-nss" secondAttribute="trailing" constant="20" id="F8v-w5-dNx"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="VMA-Ax-Gwk"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="leading" secondItem="a7a-9c-f86" secondAttribute="leading" id="Xnw-ff-zsk"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.4" id="atC-5m-KPm"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="top" secondItem="a7a-9c-f86" secondAttribute="bottom" id="cfO-bo-Deu"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="eAH-Ur-1wd"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="trailing" secondItem="a7a-9c-f86" secondAttribute="trailing" id="efJ-AD-YHa"/>
+                <constraint firstItem="SVE-Ob-nss" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kUN-lZ-89p"/>
+            </constraints>
+            <point key="canvasLocation" x="-249" y="70"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

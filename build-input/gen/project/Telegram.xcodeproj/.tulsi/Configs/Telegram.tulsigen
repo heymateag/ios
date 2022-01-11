@@ -1,0 +1,22 @@
+{
+  "additionalFilePaths" : [
+    "Telegram/BUILD"
+  ],
+  "buildTargets" : [
+    "//Telegram:Telegram"
+  ],
+  "optionSet" : {
+    "BazelBuildOptionsDebug" : {
+      "p" : "--override_repository=build_configuration=/Users/apple/telegram-configuration --//Telegram:disableExtensions --override_repository=build_configuration=/Users/apple/telegram-configuration --announce_rc --features=swift.use_global_module_cache --verbose_failures --features=swift.enable_batch_mode --swiftcopt=-j7 --define=buildNumber=10000 --define=telegramVersion=8.4 --disk_cache=/Users/apple/telegram-bazel-cache --//Telegram:disableExtensions"
+    },
+    "BazelBuildOptionsRelease" : {
+      "p" : "--override_repository=build_configuration=/Users/apple/telegram-configuration --//Telegram:disableExtensions --override_repository=build_configuration=/Users/apple/telegram-configuration --announce_rc --features=swift.use_global_module_cache --verbose_failures --features=swift.enable_batch_mode --swiftcopt=-j7 --define=buildNumber=10000 --define=telegramVersion=8.4 --disk_cache=/Users/apple/telegram-bazel-cache --//Telegram:disableExtensions"
+    }
+  },
+  "projectName" : "Telegram",
+  "sourceFilters" : [
+    "Telegram/...",
+    "submodules/...",
+    "third-party/..."
+  ]
+}

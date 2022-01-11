@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="COCategoryCell" id="acf-Ia-daG" customClass="COCategoryCell" customModule="Paymate">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="acf-Ia-daG" id="YWa-7q-Uzf">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="U8t-KQ-qK5">
+                        <rect key="frame" x="20" y="16" width="374" height="95"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="GDq-fI-xCP">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="35"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="category" translatesAutoresizingMaskIntoConstraints="NO" id="BYN-iJ-JBU">
+                                        <rect key="frame" x="0.0" y="8" width="19" height="19.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCN-lQ-NPN">
+                                        <rect key="frame" x="35" y="7.5" width="339" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFO-IY-u4q">
+                                <rect key="frame" x="0.0" y="51" width="374" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdW-np-uGg">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="z5n-nL-rAl"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lgs-9T-ub7">
+                                        <rect key="frame" x="35" y="0.0" width="339" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4j-HZ-WTb">
+                                                <rect key="frame" x="0.0" y="0.0" width="165.5" height="44"/>
+                                                <color key="backgroundColor" red="0.1176470588" green="0.96862745100000003" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IPm-K2-8Nk">
+                                                <rect key="frame" x="173.5" y="0.0" width="165.5" height="44"/>
+                                                <color key="backgroundColor" red="0.1176470588" green="0.45882352939999999" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="zGF-wp-2e8"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="U8t-KQ-qK5" firstAttribute="top" secondItem="YWa-7q-Uzf" secondAttribute="top" constant="16" id="1nb-Iw-5di"/>
+                    <constraint firstItem="U8t-KQ-qK5" firstAttribute="leading" secondItem="YWa-7q-Uzf" secondAttribute="leading" constant="20" id="A3h-hP-hWN"/>
+                    <constraint firstAttribute="trailing" secondItem="U8t-KQ-qK5" secondAttribute="trailing" constant="20" id="hvK-Bp-DYa"/>
+                    <constraint firstAttribute="bottom" secondItem="U8t-KQ-qK5" secondAttribute="bottom" constant="16" id="kMV-m4-F1j"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="btnCategory" destination="a4j-HZ-WTb" id="XYu-dC-FBo"/>
+                <outlet property="btnSubCategory" destination="IPm-K2-8Nk" id="Yjr-sc-pQ2"/>
+                <outlet property="detailsStackView" destination="zFO-IY-u4q" id="cG0-yI-kBU"/>
+            </connections>
+            <point key="canvasLocation" x="-117.39130434782609" y="-1.0044642857142856"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="category" width="19" height="19.5"/>
+    </resources>
+</document>

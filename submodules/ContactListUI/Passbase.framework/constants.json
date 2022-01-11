@@ -1,0 +1,56 @@
+{
+  "durations": {
+    "error-message": 1500,
+    "start-success-message": 500,
+    "success-message": 250,
+    "total-timeout": 20000
+  },
+  "factors": {
+    "face-distance": {
+      "close": {
+        "position": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "size": {
+          "landscape": 0.7,
+          "portrait": 0.9
+        },
+        "validation_thresholds": {
+          "center": 0.1,
+          "radius": 0.1
+        }
+      },
+      "far": {
+        "position": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "size": {
+          "landscape": 0.4,
+          "portrait": 0.55
+        },
+        "validation_thresholds": {
+          "center": 0.1,
+          "radius": 0.1
+        }
+      },
+      "initial": {
+        "position": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "size": {
+          "landscape": 0.5,
+          "portrait": 0.7
+        },
+        "validation_thresholds": {
+          "center": 0.13,
+          "radius": 0.1
+        }
+      }
+    }
+  },
+  "max-retry": 5,
+  "version": "1.0.0"
+}

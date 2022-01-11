@@ -1,0 +1,10 @@
+{
+  "optionSet" : {
+    "BazelPath" : {
+      "p" : "/Users/apple/Documents/GitHub/Telegram-iOS_jan1/build-input/gen/project/bazel"
+    },
+    "WorkspaceRootPath" : {
+      "p" : "/Users/apple/Documents/GitHub/Telegram-iOS_jan1"
+    }
+  }
+}

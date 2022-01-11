@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="COLocationCell" id="APN-UC-dJE" customClass="COLocationCell" customModule="Paymate">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="109"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="APN-UC-dJE" id="bfG-lG-6f1">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="109"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Vdb-l1-vhY">
+                        <rect key="frame" x="20" y="16" width="374" height="77"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="rDd-Z6-GCs">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="41"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="OmB-ZW-Ye8">
+                                        <rect key="frame" x="0.0" y="10.5" width="16" height="20"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNW-u1-lq7">
+                                        <rect key="frame" x="32" y="10.5" width="342" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7G-Os-WAy">
+                                <rect key="frame" x="0.0" y="57" width="374" height="20"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PeY-Ng-3zA">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="vPk-yE-0nI"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tgZ-b2-TSP">
+                                        <rect key="frame" x="35" y="0.0" width="339" height="20"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Jm-po-XYm">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                <color key="backgroundColor" red="0.3294117647" green="0.65490196079999996" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="bG1-YV-eqU"/>
+                                                    <constraint firstAttribute="height" constant="20" id="jcT-Km-sFC"/>
+                                                </constraints>
+                                                <state key="normal" image="tickMark"/>
+                                                <connections>
+                                                    <action selector="onIsOnline:" destination="APN-UC-dJE" eventType="touchUpInside" id="jTn-9p-Xkc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1y-dH-joP">
+                                                <rect key="frame" x="24" y="0.0" width="315" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="online">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Vdb-l1-vhY" secondAttribute="trailing" constant="20" id="AgV-0r-E9h"/>
+                    <constraint firstAttribute="bottom" secondItem="Vdb-l1-vhY" secondAttribute="bottom" constant="16" id="F1J-nR-emd"/>
+                    <constraint firstItem="Vdb-l1-vhY" firstAttribute="top" secondItem="bfG-lG-6f1" secondAttribute="top" constant="16" id="bKq-fq-dcV"/>
+                    <constraint firstItem="Vdb-l1-vhY" firstAttribute="leading" secondItem="bfG-lG-6f1" secondAttribute="leading" constant="20" id="oab-sV-hhw"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="detailsSV" destination="O7G-Os-WAy" id="8tl-Ex-3k9"/>
+                <outlet property="isOnlinecheckbox" destination="6Jm-po-XYm" id="xAT-MY-n4j"/>
+            </connections>
+            <point key="canvasLocation" x="244.92753623188409" y="98.772321428571431"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="location" width="16" height="20"/>
+        <image name="tickMark" width="11" height="8"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

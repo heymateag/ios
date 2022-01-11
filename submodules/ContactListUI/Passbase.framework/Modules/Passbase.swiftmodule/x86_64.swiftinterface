@@ -1,0 +1,505 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name Passbase
+import AVFoundation
+import AVKit
+import CoreGraphics
+import CoreText
+import Foundation
+import ImageIO
+import Microblink
+import MobileCoreServices
+@_exported import Passbase
+import PhotosUI
+import QuartzCore
+import Swift
+import SwiftUI
+import UIKit
+import Vision
+import _Concurrency
+public enum SelfieFinishState {
+  case success
+  case unknownError
+  case authenticationError
+  case authenticationFinish
+  case cancel
+  public static func == (a: Passbase.SelfieFinishState, b: Passbase.SelfieFinishState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public typealias LottieCompletionBlock = (Swift.Bool) -> Swift.Void
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(PassbaseButton) @_Concurrency.MainActor(unsafe) public class PassbaseButton : UIKit.UIButton {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc override dynamic public func awakeFromNib()
+  @objc deinit
+}
+extension UIKit.UIResponder {
+  @_Concurrency.MainActor(unsafe) public var parentViewController: UIKit.UIViewController? {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class FloatValueProvider : Passbase.AnyValueProvider {
+  final public var valueType: Any.Type {
+    get
+  }
+  final public func hasUpdate(frame: CoreGraphics.CGFloat) -> Swift.Bool
+  final public func value(frame: CoreGraphics.CGFloat) -> Any
+  @objc deinit
+}
+extension Passbase.Color : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol AnyValueProvider {
+  var valueType: Any.Type { get }
+  func hasUpdate(frame: Passbase.AnimationFrameTime) -> Swift.Bool
+  func value(frame: Passbase.AnimationFrameTime) -> Any
+}
+@_hasMissingDesignatedInitializers public class FilepathImageProvider : Passbase.AnimationImageProvider {
+  public func imageForAsset(asset: Passbase.ImageAsset) -> CoreGraphics.CGImage?
+  @objc deinit
+}
+public struct AnimationKeypath {
+}
+public struct URLParameterEncoder : Passbase.ParameterEncoder {
+  public func encode(urlRequest: inout Foundation.URLRequest, with parameters: Passbase.Parameters) throws
+}
+extension Passbase.PBAnimation {
+  public static func named(_ name: Swift.String, bundle: Foundation.Bundle = Bundle.main, subdirectory: Swift.String? = nil, animationCache: Passbase.AnimationCacheProvider? = nil) -> Passbase.PBAnimation?
+  public static func filepath(_ filepath: Swift.String, animationCache: Passbase.AnimationCacheProvider? = nil) -> Passbase.PBAnimation?
+  public typealias DownloadClosure = (Passbase.PBAnimation?) -> Swift.Void
+  public static func loadedFrom(url: Foundation.URL, closure: @escaping Passbase.PBAnimation.DownloadClosure, animationCache: Passbase.AnimationCacheProvider?)
+  final public func progressTime(forMarker named: Swift.String) -> Passbase.AnimationProgressTime?
+  final public func frameTime(forMarker named: Swift.String) -> Passbase.AnimationFrameTime?
+  final public func progressTime(forFrame frameTime: Passbase.AnimationFrameTime) -> Passbase.AnimationProgressTime
+  final public func frameTime(forProgress progressTime: Passbase.AnimationProgressTime) -> Passbase.AnimationFrameTime
+  final public func time(forFrame frameTime: Passbase.AnimationFrameTime) -> Foundation.TimeInterval
+  final public func frameTime(forTime time: Foundation.TimeInterval) -> Passbase.AnimationFrameTime
+  final public var duration: Foundation.TimeInterval {
+    get
+  }
+  final public var bounds: CoreGraphics.CGRect {
+    get
+  }
+  final public var size: CoreGraphics.CGSize {
+    get
+  }
+}
+extension QuartzCore.CALayer {
+  public func logLayerTree(withIndent: Swift.Int = 0)
+}
+public enum ColorFormatDenominator {
+  case One
+  case OneHundred
+  case TwoFiftyFive
+  public static func == (a: Passbase.ColorFormatDenominator, b: Passbase.ColorFormatDenominator) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct Color {
+}
+@_hasMissingDesignatedInitializers @objc final public class CompatibleAnimation : ObjectiveC.NSObject {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor(unsafe) final public class CompatibleAnimationView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) override final public var contentMode: UIKit.UIView.ContentMode {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class LottieView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func didMoveToWindow()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var contentMode: UIKit.UIView.ContentMode {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension UIKit.UIColor {
+  convenience public init(_ hexString: Swift.String?)
+  convenience public init(hexString: Swift.String?, alpha: Swift.Float = 1.0)
+}
+public enum LottieBackgroundBehavior {
+  case stop
+  case pause
+  case pauseAndRestore
+  case forceFinish
+  public static func == (a: Passbase.LottieBackgroundBehavior, b: Passbase.LottieBackgroundBehavior) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LottieLoopMode {
+  case playOnce
+  case loop
+  case autoReverse
+  case `repeat`(Swift.Float)
+  case repeatBackwards(Swift.Float)
+}
+extension Passbase.LottieLoopMode : Swift.Equatable {
+  public static func == (lhs: Passbase.LottieLoopMode, rhs: Passbase.LottieLoopMode) -> Swift.Bool
+}
+public enum CoordinateSpace : Swift.Int, Swift.Codable {
+  case type2d
+  case type3d
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+final public class PBAnimation : Swift.Codable {
+  final public let startFrame: Passbase.AnimationFrameTime
+  final public let endFrame: Passbase.AnimationFrameTime
+  final public let framerate: Swift.Double
+  final public var markerNames: [Swift.String] {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  final public func encode(to encoder: Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class LRUAnimationCache : Passbase.AnimationCacheProvider {
+  public func clearCache()
+  public func animation(forKey: Swift.String) -> Passbase.PBAnimation?
+  public func setAnimation(_ animation: Passbase.PBAnimation, forKey: Swift.String)
+  @objc deinit
+}
+extension UIKit.UIScreen {
+  @_Concurrency.MainActor(unsafe) public func setBrightness(to value: CoreGraphics.CGFloat, duration: Foundation.TimeInterval = 0.3, ticksPerSecond: Swift.Double = 120)
+}
+public typealias AnimationFrameTime = CoreGraphics.CGFloat
+public typealias AnimationProgressTime = CoreGraphics.CGFloat
+@_hasMissingDesignatedInitializers final public class GradientValueProvider : Passbase.AnyValueProvider {
+  final public var valueType: Any.Type {
+    get
+  }
+  final public func hasUpdate(frame: CoreGraphics.CGFloat) -> Swift.Bool
+  final public func value(frame: CoreGraphics.CGFloat) -> Any
+  @objc deinit
+}
+public typealias Parameters = [Swift.String : Any]
+public protocol ParameterEncoder {
+  func encode(urlRequest: inout Foundation.URLRequest, with parameters: Passbase.Parameters) throws
+}
+public enum ParameterEncoding {
+  case urlEncoding
+  case jsonEncoding
+  case urlAndJsonEncoding
+  public func encode(urlRequest: inout Foundation.URLRequest, bodyParameters: Passbase.Parameters?, urlParameters: Passbase.Parameters?) throws
+  public static func == (a: Passbase.ParameterEncoding, b: Passbase.ParameterEncoding) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum NetworkError : Swift.String, Swift.Error {
+  case parametersNil
+  case encodingFailed
+  case missingURL
+  case missingFile
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc public protocol NavigationBarViewDelegate {
+  @objc func didClickBackNavigationButton()
+  @objc optional func didClickCloseNavigationButton()
+}
+public class Asset : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public typealias NetworkRouterCompletion = (_ data: Foundation.Data?, _ response: Foundation.URLResponse?, _ error: Swift.Error?) -> ()
+@_hasMissingDesignatedInitializers final public class PointValueProvider : Passbase.AnyValueProvider {
+  final public var valueType: Any.Type {
+    get
+  }
+  final public func hasUpdate(frame: CoreGraphics.CGFloat) -> Swift.Bool
+  final public func value(frame: CoreGraphics.CGFloat) -> Any
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ImageAsset : Passbase.Asset {
+  final public let name: Swift.String
+  final public let directory: Swift.String
+  final public let width: Swift.Double
+  final public let height: Swift.Double
+  override final public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+public enum LayerType : Swift.Int, Swift.Codable {
+  case precomp
+  case solid
+  case image
+  case null
+  case shape
+  case text
+  public init(from decoder: Swift.Decoder) throws
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum MatteType : Swift.Int, Swift.Codable {
+  case none
+  case add
+  case invert
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BlendMode : Swift.Int, Swift.Codable {
+  case normal
+  case multiply
+  case screen
+  case overlay
+  case darken
+  case lighten
+  case colorDodge
+  case colorBurn
+  case hardLight
+  case softLight
+  case difference
+  case exclusion
+  case hue
+  case saturation
+  case color
+  case luminosity
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) open class AnimatedControl : UIKit.UIControl {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isEnabled: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isSelected: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isHighlighted: Swift.Bool {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func beginTracking(_ touch: UIKit.UITouch, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func continueTracking(_ touch: UIKit.UITouch, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func endTracking(_ touch: UIKit.UITouch?, with event: UIKit.UIEvent?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func cancelTracking(with event: UIKit.UIEvent?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @_Concurrency.MainActor(unsafe) @objc get
+  }
+  @_Concurrency.MainActor(unsafe) open func animationDidSet()
+  @objc deinit
+}
+public typealias HTTPHeaders = [Swift.String : Swift.String]
+public enum HTTPTask {
+  case request
+  case requestParameters(bodyParameters: Passbase.Parameters?, bodyEncoding: Passbase.ParameterEncoding, urlParameters: Passbase.Parameters?)
+  case requestParametersAndHeaders(bodyParameters: Passbase.Parameters?, bodyEncoding: Passbase.ParameterEncoding, urlParameters: Passbase.Parameters?, additionHeaders: Passbase.HTTPHeaders?)
+  case requestUploadData(additionHeaders: Passbase.HTTPHeaders?)
+  case uploadDataWithProgress(additionHeaders: Passbase.HTTPHeaders?)
+}
+public protocol AnimationTextProvider : AnyObject {
+  func textFor(keypathName: Swift.String, sourceText: Swift.String) -> Swift.String
+}
+@_hasMissingDesignatedInitializers final public class DictionaryTextProvider : Passbase.AnimationTextProvider {
+  final public func textFor(keypathName: Swift.String, sourceText: Swift.String) -> Swift.String
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class DefaultTextProvider : Passbase.AnimationTextProvider {
+  final public func textFor(keypathName: Swift.String, sourceText: Swift.String) -> Swift.String
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BundleImageProvider : Passbase.AnimationImageProvider {
+  public func imageForAsset(asset: Passbase.ImageAsset) -> CoreGraphics.CGImage?
+  @objc deinit
+}
+public protocol PassbaseDelegate : AnyObject {
+  func onSubmitted(identityAccessKey: Swift.String)
+  func onFinish(identityAccessKey: Swift.String)
+  func onError(errorCode: Swift.String)
+  func onStart()
+}
+@objc @_inheritsConvenienceInitializers public class PassbaseSDK : ObjectiveC.NSObject {
+  public static let version: Swift.String
+  weak public static var delegate: Passbase.PassbaseDelegate?
+  public static var metaData: Swift.String?
+  public static var prefillUserEmail: Swift.String? {
+    get
+    set
+  }
+  public static var prefillCountry: Swift.String?
+  public static var source: Swift.Int {
+    get
+    set
+  }
+  public static func initialize(publishableApiKey: Swift.String)
+  public static func startVerification(from: UIKit.UIViewController) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct JSONParameterEncoder : Passbase.ParameterEncoder {
+  public func encode(urlRequest: inout Foundation.URLRequest, with parameters: Passbase.Parameters) throws
+}
+public enum HTTPMethod : Swift.String {
+  case get
+  case post
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+infix operator +| : DefaultPrecedence
+infix operator +- : DefaultPrecedence
+extension Passbase.Vector1D : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension Passbase.Vector3D : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension Passbase.Vector3D {
+  public var pointValue: CoreGraphics.CGPoint {
+    get
+  }
+  public var sizeValue: CoreGraphics.CGSize {
+    get
+  }
+}
+public enum ChallengeInstructionMessage : Swift.String {
+  case initialization
+  case pending
+  case validation
+  case validated_success
+  case timeout
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ChallengeHintMessage : Swift.String {
+  case initialization
+  case pending_far_too_close
+  case pending_far_too_far
+  case pending_off_left
+  case pending_off_right
+  case pending_off_up
+  case pending_off_downd
+  case pending_no_face
+  case validation
+  case validated_success_first
+  case validated_success_last
+  case empty
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class AnimationSubview : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class SizeValueProvider : Passbase.AnyValueProvider {
+  final public var valueType: Any.Type {
+    get
+  }
+  final public func hasUpdate(frame: CoreGraphics.CGFloat) -> Swift.Bool
+  final public func value(frame: CoreGraphics.CGFloat) -> Any
+  @objc deinit
+}
+public protocol AnimationImageProvider {
+  func imageForAsset(asset: Passbase.ImageAsset) -> CoreGraphics.CGImage?
+}
+public protocol ImageConfirmationViewDelegate : AnyObject {
+  func didClickRedoButton()
+  func didClickConfirmButton()
+}
+@_hasMissingDesignatedInitializers @objc final public class CompatibleAnimationKeypath : ObjectiveC.NSObject {
+  @objc deinit
+}
+public struct Vector1D {
+}
+public struct Vector3D {
+}
+@_hasMissingDesignatedInitializers final public class ColorValueProvider : Passbase.AnyValueProvider {
+  final public var valueType: Any.Type {
+    get
+  }
+  final public func hasUpdate(frame: CoreGraphics.CGFloat) -> Swift.Bool
+  final public func value(frame: CoreGraphics.CGFloat) -> Any
+  @objc deinit
+}
+extension UIKit.UIColor {
+  public var lottieColorValue: Passbase.Color {
+    get
+  }
+}
+public protocol AnimationCacheProvider {
+  func animation(forKey: Swift.String) -> Passbase.PBAnimation?
+  func setAnimation(_ animation: Passbase.PBAnimation, forKey: Swift.String)
+  func clearCache()
+}
+extension Swift.Array where Element : Swift.Hashable {
+  public func set() -> Swift.Set<Swift.Array<Element>.Element>
+  public func isSubset(of array: Swift.Array<Element>) -> Swift.Bool
+  public func isSuperset(of array: Swift.Array<Element>) -> Swift.Bool
+  public func commonElements(between array: Swift.Array<Element>) -> Swift.Array<Element>
+  public func hasCommonElements(with array: Swift.Array<Element>) -> Swift.Bool
+}
+extension Passbase.SelfieFinishState : Swift.Equatable {}
+extension Passbase.SelfieFinishState : Swift.Hashable {}
+extension Passbase.ColorFormatDenominator : Swift.Equatable {}
+extension Passbase.ColorFormatDenominator : Swift.Hashable {}
+extension Passbase.LottieBackgroundBehavior : Swift.Equatable {}
+extension Passbase.LottieBackgroundBehavior : Swift.Hashable {}
+extension Passbase.CoordinateSpace : Swift.Equatable {}
+extension Passbase.CoordinateSpace : Swift.Hashable {}
+extension Passbase.CoordinateSpace : Swift.RawRepresentable {}
+extension Passbase.ParameterEncoding : Swift.Equatable {}
+extension Passbase.ParameterEncoding : Swift.Hashable {}
+extension Passbase.NetworkError : Swift.Equatable {}
+extension Passbase.NetworkError : Swift.Hashable {}
+extension Passbase.NetworkError : Swift.RawRepresentable {}
+extension Passbase.LayerType : Swift.Equatable {}
+extension Passbase.LayerType : Swift.Hashable {}
+extension Passbase.LayerType : Swift.RawRepresentable {}
+extension Passbase.MatteType : Swift.Equatable {}
+extension Passbase.MatteType : Swift.Hashable {}
+extension Passbase.MatteType : Swift.RawRepresentable {}
+extension Passbase.BlendMode : Swift.Equatable {}
+extension Passbase.BlendMode : Swift.Hashable {}
+extension Passbase.BlendMode : Swift.RawRepresentable {}
+extension Passbase.HTTPMethod : Swift.Equatable {}
+extension Passbase.HTTPMethod : Swift.Hashable {}
+extension Passbase.HTTPMethod : Swift.RawRepresentable {}
+extension Passbase.ChallengeInstructionMessage : Swift.Equatable {}
+extension Passbase.ChallengeInstructionMessage : Swift.Hashable {}
+extension Passbase.ChallengeInstructionMessage : Swift.RawRepresentable {}
+extension Passbase.ChallengeHintMessage : Swift.Equatable {}
+extension Passbase.ChallengeHintMessage : Swift.Hashable {}
+extension Passbase.ChallengeHintMessage : Swift.RawRepresentable {}

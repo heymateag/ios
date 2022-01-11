@@ -1,0 +1,17 @@
+{
+  "configDefaults" : {
+    "optionSet" : {
+      "BazelBuildOptionsDebug" : {
+        "p" : "--override_repository=build_configuration=/Users/apple/telegram-configuration --//Telegram:disableExtensions"
+      },
+      "BazelBuildOptionsRelease" : {
+        "p" : "--override_repository=build_configuration=/Users/apple/telegram-configuration --//Telegram:disableExtensions"
+      }
+    }
+  },
+  "packages" : [
+    "Telegram"
+  ],
+  "projectName" : "Telegram",
+  "workspaceRoot" : "../../../.."
+}

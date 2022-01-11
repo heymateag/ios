@@ -1,0 +1,2 @@
+#!/bin/sh
+/Users/apple/bazel-dist/bazel "$@" --override_repository=build_configuration=/Users/apple/telegram-configuration
