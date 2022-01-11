@@ -1,15 +1,5 @@
-# Telegram iOS Source Code Compilation Guide
+# Heymate iOS Source Code Compilation Guide
 
-We welcome all developers to use our API and source code to create applications on our platform.
-There are several things we require from **all developers** for the moment.
-
-# Creating your Telegram Application
-
-1. [**Obtain your own api_id**](https://core.telegram.org/api/obtaining_api_id) for your application.
-2. Please **do not** use the name Telegram for your app — or make sure your users understand that it is unofficial.
-3. Kindly **do not** use our standard logo (white paper plane in a blue circle) as your app's logo.
-3. Please study our [**security guidelines**](https://core.telegram.org/mtproto/security_guidelines) and take good care of your users' data and privacy.
-4. Please remember to publish **your** code too in order to comply with the licences.
 
 # Compilation Guide
 
@@ -85,24 +75,4 @@ python3 build-system/Make/Make.py \
     --disableExtensions \
     --disableProvisioningProfiles
 ```
-
-
-Tip: use `--disableExtensions` when developing to speed up development by not building application extensions and the WatchOS app.
-
-
-# Tips
-
-Bazel is used to build the app. To simplify the development setup a helper script is provided (`build-system/Make/Make.py`). See help:
-
-```
-python3 build-system/Make/Make.py --help
-python3 build-system/Make/Make.py build --help
-python3 build-system/Make/Make.py generateProject --help
-```
-
-Each release is built using specific Xcode and Bazel versions (see `versions.json`). The helper script checks the versions of installed software and reports an error if they don't match the ones specified in `versions.json`. There are flags that allow to bypass these checks:
-
-```
-python3 build-system/Make/Make.py --overrideBazelVersion build ... # Don't check the version of Bazel
-python3 build-system/Make/Make.py --overrideXcodeVersion build ... # Don't check the version of Xcode
-```
+7.Replace the submodules,Main Bazel build file and Resources folders from this project into your final cloned project
