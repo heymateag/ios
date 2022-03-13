@@ -7,10 +7,14 @@
 
 import Foundation
 import UIKit
+import TelegramCore
+import web3swift
+import WalletConnectSwift
+import BigInt
 
 public struct AppUtils {
     
-    static let sharedInstance = AppUtils()
+    public static var sharedInstance = AppUtils()
     
     private static let LOGIN_TOKEN = "LOGIN_TOKEN"
     
@@ -20,6 +24,14 @@ public struct AppUtils {
     private static let FORMATTER_OFFER_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     private static let FORMATTER_OFFER_DISPLAY = "E MMM dd yyyy HH:mm"
     private static let LOGIN_PHONE = "Phone_number"
+    private static let WC_SERVICE_HANDLER = "wcurl"
+    private static let DEFAULT_CURRENCY = "Default_currency"
+    public static let EURCurrency = "eur"
+    public static let USDCurrency = "usd"
+    private var _shouldPasteOffer = false
+    private var _pasteOfferURL = ""
+    
+    public static let europeCodes:[String] = ["+30","+31","+32","+33","+36","+39","+40","+41","+43","+44","+45","+46","+48","+49","+298","+350","+352","+353","+354","+355","+356","+357","+358","+359","+370","+371","+372","+373","+375","+376","+377","+378","+379","+380","+381","+382","+383","+385","+386","+387","+389","+420","+421","+423"]
     
     static func COLOR_BLACK() -> UIColor {
         if #available(iOS 13, *) {
@@ -89,6 +101,11 @@ public struct AppUtils {
         return UIColor(red: 217/255, green: 247/255, blue: 197/255, alpha: 1)
     }
 
+    
+    static func COLOR_GREEN5() -> UIColor {
+        return UIColor(red: 30/255, green: 117/255, blue: 12/255, alpha: 1)
+    }
+    
     static func COLOR_YELLOW() -> UIColor {
         return UIColor(red: 255/255, green: 181/255, blue: 49/255, alpha: 1)
     }
@@ -104,6 +121,42 @@ public struct AppUtils {
     }
     static func APP_MEDIUM_FONT(size:CGFloat) -> UIFont {
         return UIFont(name: "Roboto-Medium", size: size) ?? UIFont.systemFont(ofSize: size, weight: .medium)
+    }
+    
+    public static func getCurrencyOnMobileNumber() -> String {
+        var currency = USDCurrency
+        if let number = getLoginPhoneNumber() {
+            if number.count > 3 {
+                let countryCodeUpto3 = number.prefix(upTo: number.index(number.startIndex, offsetBy: 4))
+                print("code \(countryCodeUpto3)")
+                if europeCodes.contains(String(countryCodeUpto3)) {
+                    print("its euro code")
+//                    return "EUR"
+                    currency = EURCurrency
+                    return currency
+                } else {
+                    print("non euro code")
+                }
+                let countryCodeUpto2 = number.prefix(upTo: number.index(number.startIndex, offsetBy: 3))
+                print("code \(countryCodeUpto2)")
+                if europeCodes.contains(String(countryCodeUpto2)) {
+                    print("its euro code")
+                    currency = EURCurrency
+                } else {
+                    print("non euro code")
+                }
+            }
+        }
+        return currency
+    }
+    
+    public mutating func setPasteOfferMode(paste:Bool,offerID:String) {
+        _shouldPasteOffer = paste
+        _pasteOfferURL = offerID
+    }
+    
+    public func shouldPasteOffer() -> (paste:Bool,offerURL:String) {
+        return (_shouldPasteOffer,_pasteOfferURL)
     }
     
     static func getScheduleDateAndTime(date:Date) -> (date:String,time:String) {
@@ -137,6 +190,34 @@ public struct AppUtils {
         }
         return string
     }
+    public static func identifyURL(offer:String) -> URL? {
+            do {
+                let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+                let matches = detector.matches(in: offer, options: [], range: NSRange(location: 0, length: offer.utf16.count))
+                return matches.first?.url
+            } catch {
+                print("identifyURL error  \(error)")
+            }
+            return nil
+        }
+    
+    public static func saveWeb3Url(url:String?) {
+        print("save web3 url \(url)")
+        UserDefaults.standard.setValue(url, forKey: AppUtils.WC_SERVICE_HANDLER)
+    }
+    
+    public static func getWeb3URL() -> String? {
+        return UserDefaults.standard.string(forKey: AppUtils.WC_SERVICE_HANDLER)
+    }
+    
+    public static func saveDefaultCurrency(_ currency:String)  {
+        print("default currency \(currency)")
+        UserDefaults.standard.setValue(currency, forKey: DEFAULT_CURRENCY)
+    }
+    
+    public static func getDefaultCurrency() -> String? {
+        return UserDefaults.standard.value(forKey: DEFAULT_CURRENCY) as? String
+    }
     
     public static func saveLoginMobileNumber(_ number:String) {
         print("saved login \(number)")
@@ -150,9 +231,10 @@ public struct AppUtils {
     public static func getScheduledDateDisplay(milliSeconds:Double) -> String  {
         let date = Date(timeIntervalSince1970: TimeInterval((milliSeconds)))
 //        print("date - \(date)")
-        let FORMATTER_OFFER_DISPLAY = "E MMM dd yyyy HH:mm a"
+        let FORMATTER_OFFER_DISPLAY = "E MMM dd yyyy HH:mm"
         let formatter = DateFormatter()
         formatter.dateFormat = FORMATTER_OFFER_DISPLAY
+        formatter.locale = Calendar.current.locale
         let converted = formatter.string(from: date)
 //        print("converted \(converted)")
         return converted
@@ -186,11 +268,82 @@ extension AppUtils {
     }
     
     public static func getLoginToken() -> String {
+
         return UserDefaults.standard.string(forKey: LOGIN_TOKEN) ?? ""
     }
 }
 
 extension AppUtils {
+    public static func hasLowBalance() -> String {
+
+            
+
+            let defaultCurrency = AppUtils.getDefaultCurrency()
+
+            var stableToken = ""
+
+            if defaultCurrency == "eur" {
+
+                stableToken = Constants.StableTokenEUR
+
+            } else if defaultCurrency == "usd" {
+
+                stableToken = Constants.StableToken
+
+            }
+
+            
+
+            let contractAddress = EthereumAddress(stableToken)
+
+            let address = (WalletManager.currentAccount?.address)!
+
+            let celoAddress = EthereumAddress(address)
+
+            let bundlePath = Bundle.main.path(forResource: "stable_token_contracts", ofType: "json")
+
+            let jsonString = try! String(contentsOfFile: bundlePath!)
+
+            
+
+            let contract = WalletManager.web3Net.contract(jsonString, at: contractAddress, abiVersion: 2)!
+
+
+
+            var options = TransactionOptions.defaultOptions
+
+            options.from = celoAddress
+
+            options.gasPrice = .automatic
+
+            options.gasLimit = .automatic
+
+            let method = "balanceOf"
+
+            let tx = contract.read(
+
+                method,
+
+                parameters: [address] as [AnyObject],
+
+                extraData: Data(),
+
+                transactionOptions: options)!
+
+            let tokenBalance = try! tx.call()
+
+            let balanceBigUInt = tokenBalance["0"] as! BigUInt
+
+            let balanceString = Web3.Utils.formatToEthereumUnits(balanceBigUInt, toUnits: .eth, decimals: 3)!
+
+            
+
+            return "\(balanceString)"
+
+        }
+
+
+
 
     private func appLabel() -> UILabel {
         let _label = UILabel()
@@ -313,5 +466,168 @@ extension AppUtils {
         stackView.addArrangedSubview(rightLabel)
         
         return stackView
+    }
+}
+
+public class Logger {
+    static func deleteLogFile() {
+
+            guard let logFile = logFile else {
+
+                return
+
+            }
+
+            do {
+
+                let fileExists = FileManager.default.fileExists(atPath: logFile.path)
+
+                if fileExists {
+
+                    print("fileExists true")
+
+                    do {
+
+//                        if FileManager.default.isDeletableFile(atPath: logFile.path) {
+
+                            try FileManager.default.removeItem(at: logFile)
+                        HUDManager.shared.showSuccess(text: "File Deleted Successfully")
+                            print("file deleted")
+
+//                        }
+
+                    } catch {
+
+                        print("exeception read \(error)")
+
+                    }
+
+                } else {
+                   
+                    print("file dont exist")
+
+                }
+
+            } catch {
+
+                print("exeception read \(error)")
+
+            }
+
+        }
+
+    static var logFile: URL? {
+//        guard let documentsDirectory = getAppBundle().bundleURL.first else { return nil }
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd-MM-yyyy"
+//        let dateString = formatter.string(from: Date())
+//        let fileName = "\(dateString).log"
+        let baseAppBundleId = Bundle.main.bundleIdentifier!
+        let appGroupName = "group.\(baseAppBundleId)"
+        if let maybeAppGroupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupName) {
+            let fileName = "Heymate.log"
+            return maybeAppGroupUrl.appendingPathComponent(fileName)
+        }
+        return nil
+    }
+    
+    static func getLogMessages() -> String {
+        guard let logFile = logFile else {
+            return ""
+        }
+        
+        do {
+            let fileExists = FileManager.default.fileExists(atPath: logFile.path)
+            if fileExists {
+                print("fileExists true")
+                let data = try Data.init(contentsOf: logFile)
+                return String.init(data: data, encoding: .utf8) ?? "NA"
+            } else {
+                print("dont exist")
+            }
+        } catch {
+            print("exeception read \(error)")
+        }
+        return ""
+    }
+    
+    static func getFileSize() -> String {
+        guard let logFile = logFile else {
+            return "NA"
+        }
+        do {
+            let attr = try FileManager.default.attributesOfItem(atPath: logFile.path)
+            print("filesize \(attr)")
+            if let fileSize = attr[FileAttributeKey.size] as? UInt64 {
+                print("insize \(fileSize)")
+                return "\((fileSize/1024)/1024) MB"
+            }
+        } catch {
+            print("file size error \(error)")
+        }
+        return "NA"
+    }
+
+ public static func logCodableData(_ data:Data) {
+        guard let logFile = logFile else {
+            return
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+        let timestamp = formatter.string(from: Date())
+        guard var d = (timestamp + " Locale: \(Locale.current.identifier): \n").data(using: String.Encoding.utf8) else { return }
+        
+        if FileManager.default.fileExists(atPath: logFile.path) {
+            do {
+                d.append(data)
+                let fileHandle = try FileHandle(forWritingTo: logFile)
+//                var existingData = try Data(contentsOf: logFile)
+//                existingData.append(d)
+                print("handled file")
+                fileHandle.seekToEndOfFile()
+                fileHandle.write(d)
+                fileHandle.closeFile()
+            } catch {
+                print("file cant handle \(error)")
+            }
+        } else {
+            do {
+//                let encoded = try JSONEncoder().encode(data)
+                try data.write(to: logFile, options: .atomicWrite)
+            } catch {
+                print("new file error \(error)")
+            }
+        }
+    }
+    
+    public static func log(_ message: String) {
+        guard let logFile = logFile else {
+            return
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+        let timestamp = formatter.string(from: Date())
+        guard let data = (timestamp + " Locale: \(Locale.current.identifier): " + message + "\n").data(using: String.Encoding.utf8) else { return }
+        
+        if FileManager.default.fileExists(atPath: logFile.path) {
+            do {
+                let fileHandle = try FileHandle(forWritingTo: logFile)
+//                var existingData = try Data(contentsOf: logFile)
+//                existingData.append(data)
+                print("handled file")
+                fileHandle.seekToEndOfFile()
+                fileHandle.write(data)
+                fileHandle.closeFile()
+            } catch {
+                print("file cant handle \(error)")
+            }
+        } else {
+            do {
+                try data.write(to: logFile, options: .atomicWrite)
+            } catch {
+                print("new file error \(error)")
+            }
+        }
     }
 }

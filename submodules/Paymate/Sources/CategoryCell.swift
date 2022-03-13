@@ -12,7 +12,7 @@ class CategoryCell: UITableViewCell {
     lazy var categoryButton:UIButton = {
         let _button = UIButton(type: .roundedRect)
         _button.setBackGroundColor(color: AppUtils.COLOR_BLUE(), state: .normal)
-        _button.setBackGroundColor(color: AppUtils.COLOR_GREEN(), state: .selected)
+        _button.setBackGroundColor(color: AppUtils.COLOR_GREEN5(), state: .selected)
         _button.isSelected = false
         _button.clipsToBounds = true
         _button.layer.cornerRadius = 8
