@@ -14,6 +14,13 @@ class COExpirationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         detailsSv.isHidden = true
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.day = 10
+
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)
+        btnExpiry.setTitle(Date.getScheduleDisplayFormat(date: futureDate ?? Date()), for: .normal)
+//        btnExpiry.setTitle(Date.getScheduleDisplayFormat(date:futureDate?? Date()), for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

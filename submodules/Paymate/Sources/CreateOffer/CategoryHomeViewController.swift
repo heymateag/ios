@@ -38,7 +38,7 @@ class CategoryHomeViewController: UIViewController {
 //        view.addGestureRecognizer(gesture)
         addEmbedCategories()
     }
-
+    
     private func addEmbedCategories() {
 
         let categoriesContainerView = UIView()

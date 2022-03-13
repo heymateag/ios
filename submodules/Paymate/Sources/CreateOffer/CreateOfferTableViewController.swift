@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import WalletConnectSwift
 
-class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar,PaymateServiceErrorhandler {
+class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar,PaymateServiceErrorhandler,ShowOptionsHandler {
     
     enum OfferSections:Int,CaseIterable {
         case Images=0,Settings
@@ -44,6 +45,35 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
         }
     }
     
+    enum CurrencyType:String {
+        case CELO = "celo"
+        case USD = "usd"
+        case EUR = "eur"
+        
+        func getDisplayCurrencyDetails() -> (currencyName:String,currencySymbol:String,apiName:String) {
+            switch self {
+                case .CELO:
+                    return ("CELO","CELO","")
+                case .USD:
+                    return ("cUSD","$","USD")
+                case .EUR:
+                    return ("cEUR","€","EUR")
+            }
+        }
+        
+        func isCELO() -> Bool {
+            return self == .CELO
+        }
+        
+        func isUSD() -> Bool {
+            return self == .USD
+        }
+        
+        func isEURO() -> Bool {
+            return self == .EUR
+        }
+    }
+    
     enum PaytermType:Int {
         case DelayInStartMins=100,DelayInStartPercentage,DepositPercentage,CancellationHours,CancellationHrsPercentage,CancellationStartHrs,CancellationEndHrs,CancellationRangePercentage
     }
@@ -52,10 +82,10 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     var offerImages:[OfferImageModel] = []
     var offerTitle = ""
     var offerDescription = ""
-    
     //category
     var selectedCategory:CategoryModel?
     var selectedSubCategory:CategoryModel?
+
     //location
     var isOnlineMeeting = true    
     //schedule
@@ -64,6 +94,7 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     var isUnlimitedParticipants = false
     var noOfParticipants:String = "0"
     //price
+    var mCurrencyType:CurrencyType = CurrencyType.USD
     var isBundleSelected = false
     var isSubscriptionSelected = false
     var bundleSessions = ""
@@ -72,10 +103,10 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     var fixedPrice = ""
     //pay terms
     var currentInputSelection:PaytermType = .DelayInStartMins
-    var payTermDelayStartMins = PayTerm(percentage: 30, constraintTime: 20)
-    var payTermDeposit = PayTerm(percentage: 30, constraintTime: 0)
-    var payTermCancelHrs = PayTerm(percentage: 30, constraintTime: 2)
-    var payTermCancelRange = PayTerm(percentage: 30, constraintTime: 0)
+    var payTermDelayStartMins = PayTerm(percentage: 0, constraintTime: 20)
+    var payTermDeposit = PayTerm(percentage: 0, constraintTime: 0)
+    var payTermCancelHrs = PayTerm(percentage: 0, constraintTime: 2)
+    var payTermCancelRange = PayTerm(percentage: 0, constraintTime: 0)
     //terms
     var termsAndConditions = ""
     //expire
@@ -85,7 +116,12 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     private var noOfSchedules = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.day = 10
         
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)
+        expireDate = futureDate ?? Date()
         let emptyView = UIView()
         emptyView.backgroundColor = .clear
         tableView.tableFooterView = emptyView
@@ -100,13 +136,16 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
         tableView.register(UINib(nibName: "COTermsCell", bundle: nil), forCellReuseIdentifier: "COTermsCell")
         tableView.register(OffersImagesCell.self, forCellReuseIdentifier: "OffersImagesCell")
         tableView.register(OffersInputCell.self, forCellReuseIdentifier: "OffersInputCell")
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTableTap))
-//        tableView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTableTap))
+        tapGesture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesture)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNavigationBarWithType(navType: .NavCenterTitleWithBackButton, centerTitle: "Create Offer", leftSelector: #selector(onBack), rightSelector: nil)
+        addBottomSaveView()
     }
     
     @objc private func onBack() {
@@ -114,7 +153,8 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     }
     
     @objc private func onTableTap() {
-        tableView.endEditing(true)
+//        tableView.endEditing(true)
+    resignKeyboard()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -186,6 +226,7 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
                 return cell
             } else if indexPath.row == OfferRowIndex.Expiration.rawValue, let cell = tableView.dequeueReusableCell(withIdentifier: "COExpirationCell") as? COExpirationCell {
                 initializeExpiration(cell: cell)
+//                updateExpireDate()
                 return cell
             } else if indexPath.row == OfferRowIndex.TnC.rawValue, let cell = tableView.dequeueReusableCell(withIdentifier: "COTermsCell") as? COTermsCell {
                 initializeTerms(cell: cell)
@@ -199,19 +240,26 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
         
         if indexPath.section == OfferSections.Settings.rawValue {
             if indexPath.row == OfferRowIndex.Category.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COCategoryCell).detailsStackView.isHidden = true
             } else if indexPath.row == OfferRowIndex.Location.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COLocationCell).detailsSV.isHidden = true
             } else if indexPath.row == OfferRowIndex.Participant.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COParticipantsCell).detailsSV.isHidden = true
             } else if indexPath.row == OfferRowIndex.Schedule.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COScheduleCell).detailsSV.isHidden = true
             } else if indexPath.row == OfferRowIndex.Pricing.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COPricingCell).detailsSv.isHidden = true
                 resetPricingViews(cell: (tableView.cellForRow(at: indexPath) as! COPricingCell))
             } else if indexPath.row == OfferRowIndex.PaymentTerms.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COPaymentTermsCell).detailsSV.isHidden = true
             } else if indexPath.row == OfferRowIndex.Expiration.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COExpirationCell).detailsSv.isHidden = true
             }  else if indexPath.row == OfferRowIndex.TnC.rawValue {
                 (tableView.cellForRow(at: indexPath) as! COTermsCell).detailsSv.isHidden = true
@@ -219,6 +267,7 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
             UIView.animate(withDuration: 0.3) {
                 if #available(iOS 11.0, *) {
                     tableView.performBatchUpdates(nil)
+                    self.resignKeyboard()
                 } else {
 
                 }
@@ -229,18 +278,23 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == OfferSections.Settings.rawValue {
             if indexPath.row == OfferRowIndex.Category.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COCategoryCell).detailsStackView.isHidden = false
             } else if indexPath.row == OfferRowIndex.Location.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COLocationCell).detailsSV.isHidden = false
             } else if indexPath.row == OfferRowIndex.Participant.rawValue {
                 (tableView.cellForRow(at: indexPath) as! COParticipantsCell).detailsSV.isHidden = false
             } else if indexPath.row == OfferRowIndex.Schedule.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COScheduleCell).detailsSV.isHidden = false
             } else if indexPath.row == OfferRowIndex.Pricing.rawValue {
                 (tableView.cellForRow(at: indexPath) as! COPricingCell).detailsSv.isHidden = false
             } else if indexPath.row == OfferRowIndex.PaymentTerms.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COPaymentTermsCell).detailsSV.isHidden = false
             } else if indexPath.row == OfferRowIndex.Expiration.rawValue {
+                resignKeyboard()
                 (tableView.cellForRow(at: indexPath) as! COExpirationCell).detailsSv.isHidden = false
             } else if indexPath.row == OfferRowIndex.TnC.rawValue {
                 (tableView.cellForRow(at: indexPath) as! COTermsCell).detailsSv.isHidden = false
@@ -249,6 +303,7 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
             UIView.animate(withDuration: 0.3) {
                 if #available(iOS 11.0, *) {
                     tableView.performBatchUpdates(nil)
+                    self.resignKeyboard()
                 } else {
 
                 }
@@ -274,32 +329,80 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
             v.backgroundColor = AppUtils.COLOR_LIGHT_GRAY6()
             return v
         }
-        if section == OfferSections.Settings.rawValue,let v = Bundle.main.loadNibNamed("COFooterView", owner: self, options: nil)?.first as? COFooterView {
+//        if section == OfferSections.Settings.rawValue,let v = Bundle.main.loadNibNamed("COFooterView", owner: self, options: nil)?.first as? COFooterView {
+//            v.btnSave.addTarget(self, action: #selector(onOfferSave), for: .touchUpInside)
+//            v.btnPromote.addTarget(self, action: #selector(onPromote), for: .touchUpInside)
+//            return v
+//        }
+        let v = UIView()
+        v.backgroundColor = .clear
+        return v
+    }
+    
+    private func addBottomSaveView() {
+        if let v = Bundle.main.loadNibNamed("COFooterView", owner: self, options: nil)?.first as? COFooterView {
+            var frame = v.frame
+            
+            frame.origin = CGPoint(x: 0.0, y: (navigationController?.view ?? self.view).bounds.size.height-frame.size.height)
+            frame.size = CGSize(width: view.frame.size.width, height: 100)
+            v.frame = frame
             v.btnSave.addTarget(self, action: #selector(onOfferSave), for: .touchUpInside)
-            v.btnPromote.addTarget(self, action: #selector(onPromote), for: .touchUpInside)
-            return v
+            self.navigationController?.view.addSubview(v)
         }
-        return nil
+    }
+    
+    func resignKeyboard() {
+//        tableView.setEditing(false, animated: true)
+        tableView.endEditing(true)
     }
     
     @objc private func onOfferSave() {
         print("onOfferSave")
+        guard !fixedPrice.isEmptyAfterTrim(),let fp = Int(fixedPrice) else {
+            self.showAlertWithMessage(title: "Error", message: "Please enter fixed price")
+            return
+        }
+        guard !offerTitle.isEmptyAfterTrim() else {
+            self.showAlertWithMessage(title: "Error", message: "Please enter offer title")
+            return
+        }
+        guard !offerDescription.isEmptyAfterTrim() else {
+            self.showAlertWithMessage(title: "Error", message: "Please enter offer description")
+            return
+        }
+        guard !offerSchedules.isEmpty else {
+            self.showAlertWithMessage(title: "Error", message: "Please add minimum one schedule")
+            return
+        }
+        guard selectedCategory != nil,selectedSubCategory != nil else {
+            self.showAlertWithMessage(title: "Error", message: "Please choose valid category and sub-category")
+            return
+        }
         let category = OfferCategory(main_cat: selectedCategory?.name ?? "", sub_cat: selectedSubCategory?.name ?? "")
         var schedules:[CreateOfferRequest.OfferSchedule] = []
         for schedule in offerSchedules {
             schedules.append(CreateOfferRequest.OfferSchedule(form_time: "\(schedule.fromDate.millisecondsSince1970)", to_time: "\(schedule.toDate.millisecondsSince1970)"))
         }
-        let bundlePrice = OfferPricing.OfferBundle.init(count: Int(bundleSessions)!, discount_percent: Int(bundleDiscount)!, signature: "")
-        let subPrice = OfferPricing.OfferSubscription.init(period: "Per month", subscription_price: Int(subscriptionPricePerMonth)!, signature: "")
-        let pricing = OfferPricing(rate_type: "Per Item", price: Int(fixedPrice)!, currency: "USD", signature: "", bundle: bundlePrice, subscription: subPrice)
+        var bundlePrice:OfferPricing.OfferBundle = OfferPricing.OfferBundle.init(count: 0, discount_percent: 0,signature:"0x00")
+        var subPrice:OfferPricing.OfferSubscription = OfferPricing.OfferSubscription.init(period: nil, subscription_price: 0,signature:"0x00")
+        if isBundleSelected,!bundleDiscount.isEmptyAfterTrim(),!bundleSessions.isEmptyAfterTrim() {
+            bundlePrice = OfferPricing.OfferBundle.init(count: Int(bundleSessions)!, discount_percent: Int(bundleDiscount)!,signature:"0x00")
+        }
+        if isSubscriptionSelected,!subscriptionPricePerMonth.isEmptyAfterTrim() {
+            subPrice = OfferPricing.OfferSubscription.init(period: "Per month", subscription_price: Int(subscriptionPricePerMonth)!,signature:"0x00")
+        }
         
+        let pricing = OfferPricing(rate_type: "Per Session", price: fp, signature:"0x00", bundle: bundlePrice, subscription: subPrice,currency: mCurrencyType.getDisplayCurrencyDetails().apiName)
         let delayStart = OfferPaymentTerms.DelayInStart(duration: payTermDelayStartMins.constraintTime, deposit: payTermDelayStartMins.percentage)
         let cancelHours = OfferPaymentTerms.Cancellation(range: payTermCancelHrs.constraintTime, penalty: payTermCancelHrs.percentage)
         let cancelRange = OfferPaymentTerms.Cancellation(range: payTermCancelHrs.endHour, penalty: payTermCancelHrs.percentage)
         
-        let terms = OfferPaymentTerms(delay_in_start: delayStart, cancellation: [cancelHours,cancelRange])
-        
-        let createOffer = CreateOfferRequest(title: offerTitle, description: offerDescription, category: category, location: OfferLocation(lat: "0", long: "0"), schedules: schedules, pricing: pricing, payment_terms: terms, term_condition: termsAndConditions, simple_share: "simple or referral ? skip for now", participants: Int(noOfParticipants)!)
+        let terms = OfferPaymentTerms(delay_in_start: delayStart, cancellation: [cancelHours,cancelRange],deposit:payTermDeposit.percentage)
+        let noofparticipants = isUnlimitedParticipants ? 1000 : Int(noOfParticipants)
+        var createOffer = CreateOfferRequest(title: offerTitle, description: offerDescription, category: category, location: OfferLocation(lat: nil, long: nil), schedules: schedules, pricing: pricing, payment_terms: terms, term_condition: termsAndConditions, simple_share: "simple or referral ? skip for now",meeting_type: isOnlineMeeting ? "ONLINE" : "DEFAULT", participants: noofparticipants)
+        createOffer.is_online_meeting = isOnlineMeeting
+        createOffer.expiration = "\(expireDate.millisecondsSince1970)"
+        createOffer.sp_wallet_address = WalletManager.currentAccount?.address
         print("createOffer \(createOffer)")
         RappleActivityIndicatorView.startAnimating()
         PeyServiceController.shared.createOffer(request: createOffer) {[weak self] (result, _) in
@@ -325,5 +428,24 @@ class CreateOfferTableViewController: UITableViewController,PaymateNavigationBar
             offerDescription = field.text ?? ""
         }
     }
-    
+}
+
+extension CreateOfferTableViewController:OnOptionsSelectionDelegate,UIPopoverPresentationControllerDelegate {
+    func didSelectOptionFromOptionsList(_ source:OptionsDatasource,onRow:Int) {
+        print("didSelectOptionFromOptionsList \(source)")
+        if source.optionDisplayValue == CurrencyType.EUR.rawValue {
+            mCurrencyType = CurrencyType.EUR
+        } else if source.optionDisplayValue == CurrencyType.USD.rawValue {
+            mCurrencyType = CurrencyType.USD
+        }
+        if let cell = tableView.cellForRow(at: OfferRowIndex.getCell(row: .Pricing)) as? COPricingCell {
+            self.refreshCurrencyType(cell: cell)
+        }
+//        else if source.optionDisplayValue == CurrencyType.REAL.rawValue {
+//            mCurrencyType = CurrencyType.REAL.rawValue
+//        }
+    }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
 }

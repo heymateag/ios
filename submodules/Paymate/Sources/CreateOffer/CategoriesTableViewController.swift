@@ -16,22 +16,23 @@ class CategoriesTableViewController: UITableViewController {
     var categoryDelegate:CategorySelectionDelegate?
     private var currentSelectedIndex:Int = 0
     
-    private var categories:[CategoryModel] = [] {
-        didSet {
-            if categories.isEmpty {
-                let headLineLabel = AppUtils.sharedInstance.getHeadingLabel()
-                headLineLabel.text = "No Data Available"
-                headLineLabel.textAlignment = .center
-                tableView.tableFooterView = headLineLabel
-            } else {
-                currentSelectedIndex = 0
-                categories[currentSelectedIndex].isSelected = true
-                categoryDelegate?.didSelectCategory(categories[0])//load for very first category
-                tableView.tableFooterView = nil
-                tableView.reloadData()
-            }
-        }
-    }
+    private var categories:[CategoryModel] = []
+//    {
+//        didSet {
+//            if categories.isEmpty {
+//                let headLineLabel = AppUtils.sharedInstance.getHeadingLabel()
+//                headLineLabel.text = "No Data Available"
+//                headLineLabel.textAlignment = .center
+//                tableView.tableFooterView = headLineLabel
+//            } else {
+//                currentSelectedIndex = 0
+//                categories[currentSelectedIndex].isSelected = true
+//                categoryDelegate?.didSelectCategory(categories[0])//load for very first category
+//                tableView.tableFooterView = nil
+//                tableView.reloadData()
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,18 @@ extension CategoriesTableViewController {
                 self.categories = response.data.map({ (category) -> CategoryModel in
                     return CategoryModel(name: category, isSelected: false)
                 })
+                if self.categories.isEmpty {
+                    let headLineLabel = AppUtils.sharedInstance.getHeadingLabel()
+                    headLineLabel.text = "No Data Available"
+                    headLineLabel.textAlignment = .center
+                    self.tableView.tableFooterView = headLineLabel
+                } else {
+                    self.currentSelectedIndex = 0
+                    self.categories[self.currentSelectedIndex].isSelected = true
+                    self.categoryDelegate?.didSelectCategory(self.categories[0])//load for very first category
+                    self.tableView.tableFooterView = nil
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 print("error \(error)")
                 break
@@ -80,11 +93,26 @@ extension CategoriesTableViewController {
         if let cell = btn.superview?.superview?.superview as? CategoryCell,let path = tableView.indexPath(for: cell) {
             if !btn.isSelected {
                 btn.isSelected = !btn.isSelected
-                categories[currentSelectedIndex].isSelected = !categories[currentSelectedIndex].isSelected
-                categories[path.row].isSelected = !categories[path.row].isSelected
-                tableView.reloadRows(at: [IndexPath(row: currentSelectedIndex, section: 0),path], with: .none)
+//                categories[currentSelectedIndex].isSelected = false
+                print("categories before \(categories)")
+//                categories.forEach { var model in
+//                    model.isSelected = false
+//                }
+//                categories = categories.map{$0.isSelected = false}
+                var updatedCategories:[CategoryModel] = []
+                for i in 0..<categories.count {
+//                    if categories[i].isSelected {
+                        categories[i].isSelected = false
+//                    }
+                    updatedCategories.append(categories[i])
+                }
+                categories = updatedCategories
+                print("categories after \(categories)")
+                categories[path.row].isSelected = true
+//                tableView.reloadRows(at: [IndexPath(row: currentSelectedIndex, section: 0),path], with: .none)
                 categoryDelegate?.didSelectCategory(categories[path.row])
                 currentSelectedIndex = path.row
+                tableView.reloadData()
             }
         }
     }

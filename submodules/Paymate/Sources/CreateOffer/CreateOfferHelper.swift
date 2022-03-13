@@ -65,6 +65,7 @@ extension CreateOfferTableViewController:CategoryHomeSelectionDelegate { // Cate
         guard let cat = selectedCategory else { return }
         CreateOfferViewModel.getSubCategoriesForCategory(cat) {[weak self] (array, error) in
             guard let self = self,error == nil,!array.isEmpty else {return }
+            self.selectedSubCategory = array.first
             self.updateCategorySelection()
         }
     }
@@ -141,10 +142,11 @@ extension CreateOfferTableViewController:DatePickerSelectionDelegate,ScheduleCel
                     cell.addScheduleToView(s, index: offerSchedules.count)
                     tableView.endUpdates()
                 }
-                if to.compare(expireDate) == .orderedAscending {
-                    expireDate = to
-                    self.showAlertWithMessage(title: "Expiratiion", message: "Expiration date has been changed to selected TO date.")
-                }
+                //bhar
+//                if to.compare(expireDate) == .orderedAscending {
+//                    expireDate = to
+////                    self.showAlertWithMessage(title: "Expiratiion", message: "Expiration date has been changed to selected TO date.")
+//                }
             }
         }
         isExpireDatePicker = false
@@ -158,6 +160,7 @@ extension CreateOfferTableViewController {//participants
     }
     
     @objc private func onUnlimited(sender:UIButton) {
+        resignKeyboard()
         sender.isSelected = !sender.isSelected
         isUnlimitedParticipants = sender.isSelected
         if sender.isSelected {
@@ -172,6 +175,7 @@ extension CreateOfferTableViewController {//participants
         if let cell = tableView.cellForRow(at: OfferRowIndex.getCell(row: .Participant)) as? COParticipantsCell {
             cell.unlimitedBtn.isSelected = false
             isUnlimitedParticipants = false
+            cell.configParticipantsSelection()
             noOfParticipants = field.text ?? ""
         }
     }
@@ -185,25 +189,28 @@ extension CreateOfferTableViewController { //price
         cell.bundleSessionsField.addTarget(self, action: #selector(onBundleSessions), for: .editingChanged)
         cell.bundleDiscField.addTarget(self, action: #selector(onBundleDiscount), for: .editingChanged)
         cell.subscField.addTarget(self, action: #selector(onSubscriptionPrice), for: .editingChanged)
-        
+        cell.currencyTypeBtn.addTarget(self, action: #selector(onCurrencyTypeSelection), for: .touchUpInside)
         
         cell.bundleSessionsField.isEnabled = cell.bundleCheckbox.isSelected
         cell.bundleDiscField.isEnabled = cell.bundleCheckbox.isSelected
         
         cell.subscField.isEnabled = cell.subscriptionCheckbox.isSelected
+        
+        cell.bundleCheckbox.changeCheckBoxSelectedState()
+        cell.subscriptionCheckbox.changeCheckBoxSelectedState()
+        
     }
     
     func resetPricingViews(cell:COPricingCell) {
         cell.bundleSessionsField.isEnabled = cell.bundleCheckbox.isSelected
         cell.bundleDiscField.isEnabled = cell.bundleCheckbox.isSelected
-        
         cell.subscField.isEnabled = cell.subscriptionCheckbox.isSelected
     }
     
     @objc private func onBundle(sender:UIButton) {
         sender.isSelected = !sender.isSelected
         isBundleSelected = sender.isSelected
-        
+        sender.changeCheckBoxSelectedState()
         if let cell = sender.superview?.superview?.superview?.superview?.superview?.superview?.superview as? COPricingCell {
             cell.bundleDiscField.isEnabled = sender.isSelected
             cell.bundleSessionsField.isEnabled = sender.isSelected
@@ -212,7 +219,7 @@ extension CreateOfferTableViewController { //price
     @objc private func onSubscription(sender:UIButton) {
         sender.isSelected = !sender.isSelected
         isSubscriptionSelected = sender.isSelected
-        
+        sender.changeCheckBoxSelectedState()
         if let cell = sender.superview?.superview?.superview?.superview?.superview?.superview?.superview as? COPricingCell {
             cell.subscField.isEnabled = sender.isSelected
         }
@@ -232,6 +239,18 @@ extension CreateOfferTableViewController { //price
     
     @objc private func onSubscriptionPrice(field:UITextField) {
         subscriptionPricePerMonth = field.text ?? ""
+    }
+    
+    func refreshCurrencyType(cell:COPricingCell) {
+        cell.currencyTypeBtn.setTitle(mCurrencyType.getDisplayCurrencyDetails().currencySymbol, for: .normal)
+    }
+    
+    @objc private func onCurrencyTypeSelection(btn:UIButton) {
+        let eur = OptionsDatasource(optionDisplayValue: CurrencyType.EUR.rawValue, optionModel: nil,leftImage:nil)
+        let cUsd = OptionsDatasource(optionDisplayValue: CurrencyType.USD.rawValue, optionModel: nil,leftImage:nil)
+//        let real = OptionsDatasource(optionDisplayValue: CurrencyType.REAL.rawValue, optionModel: nil)
+        
+        self.showPopupOptionsWithOptions([cUsd,eur], onView: btn)
     }
 }
 
@@ -282,7 +301,6 @@ extension CreateOfferTableViewController:PercentageINputDelegate { //pay terms
         cell.cancelHrEnd.addTarget(self, action: #selector(onCancelHoursEndRange), for: .touchUpInside)
         cell.cancelRangePercentage.addTarget(self, action: #selector(onCancelHoursRangePercentage), for: .touchUpInside)
         
-        
         cell.configDelayInStart(term: payTermDelayStartMins)
         cell.configDeposit(term: payTermDeposit)
         cell.configCancellationHours(term: payTermCancelHrs)
@@ -291,44 +309,51 @@ extension CreateOfferTableViewController:PercentageINputDelegate { //pay terms
     
     @objc private func onDelayStartMins() {
         currentInputSelection = .DelayInStartMins
-        showInputWith(title: "Delay in start", currentValue: payTermDelayStartMins.constraintTime)
+//        showInputWith(title: "Delay in start by Mins", currentValue: payTermDelayStartMins.constraintTime,unitsToDisplay:"Mins")
+        showInputWith(title: "Delay in start", currentValue: payTermDelayStartMins.constraintTime,unitsToDisplay:"Mins")
     }
     @objc private func onDelayStartPercentage() {
         currentInputSelection = .DelayInStartPercentage
-        showInputWith(title: "Delay in start > \(payTermDelayStartMins.constraintTime) mins", currentValue: payTermDelayStartMins.percentage)
+//        showInputWith(title: "Delay in start > \(payTermDelayStartMins.constraintTime) mins", currentValue: payTermDelayStartMins.percentage,unitsToDisplay:"%")
+        showInputWith(title: "Delay in start", currentValue: payTermDelayStartMins.percentage,unitsToDisplay:"%")
     }
     @objc private func onDepositPercentage() {
         currentInputSelection = .DepositPercentage
-        showInputWith(title: "Deposit", currentValue: payTermDeposit.percentage)
+        showInputWith(title: "Deposit", currentValue: payTermDeposit.percentage,unitsToDisplay:"%")
     }
     @objc private func onCancelHourPercentage() {
         currentInputSelection = .CancellationHrsPercentage
-        showInputWith(title: "Cancellation in > \(payTermCancelHrs.constraintTime) hrs of start", currentValue: payTermCancelHrs.percentage)
+//        showInputWith(title: "Cancellation in > \(payTermCancelHrs.constraintTime) hrs of start", currentValue: payTermCancelHrs.percentage,unitsToDisplay:"%")
+        showInputWith(title: "Cancellation", currentValue: payTermCancelHrs.percentage,unitsToDisplay:"%")
     }
     @objc private func onCancelHoursStart() {
         currentInputSelection = .CancellationHours
-        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelHrs.constraintTime)
+//        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelHrs.constraintTime,unitsToDisplay:"hrs")
+        showInputWith(title: "Cancellation", currentValue: payTermCancelHrs.constraintTime,unitsToDisplay:"hrs")
     }
     @objc private func onCancelHoursStartRange() {
         currentInputSelection = .CancellationStartHrs
-        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelRange.startHour)
+//        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelRange.startHour,unitsToDisplay:"hrs")
+        showInputWith(title: "Cancellation", currentValue: payTermCancelRange.startHour,unitsToDisplay:"hrs")
     }
     @objc private func onCancelHoursEndRange() {
         currentInputSelection = .CancellationEndHrs
-        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelRange.endHour)
+//        showInputWith(title: "Cancellation in hrs of start", currentValue: payTermCancelRange.endHour,unitsToDisplay:"hrs")
+        showInputWith(title: "Cancellation", currentValue: payTermCancelRange.endHour,unitsToDisplay:"hrs")
     }
     @objc private func onCancelHoursRangePercentage() {
         currentInputSelection = .CancellationRangePercentage
-        showInputWith(title: "Cancellation in \(payTermCancelRange.startHour) - \(payTermCancelRange.endHour) hrs of start", currentValue: payTermCancelRange.percentage)
-
+//        showInputWith(title: "Cancellation in \(payTermCancelRange.startHour) - \(payTermCancelRange.endHour) hrs of start", currentValue: payTermCancelRange.percentage,unitsToDisplay:"%")
+        showInputWith(title: "Cancellation", currentValue: payTermCancelRange.percentage,unitsToDisplay:"%")
     }
     
-    private func showInputWith(title:String,currentValue:Int) {
+    private func showInputWith(title:String,currentValue:Int,unitsToDisplay:String) {
         let controller = PercentageInputController.init(nibName: "PercentageInputView", bundle: Bundle.main)
         controller.modalPresentationStyle = .overCurrentContext
         controller.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         controller.iDelegate = self
         controller.pageTitle = title
+        controller.units = unitsToDisplay
         controller.currentValue = currentValue
         self.present(controller, animated: true, completion: nil)
     }
@@ -362,12 +387,13 @@ extension CreateOfferTableViewController {//location
     func initializeLocation(cell:COLocationCell) {
         cell.isOnlinecheckbox.isSelected = isOnlineMeeting
         cell.isOnlinecheckbox.addTarget(self, action: #selector(onOnlineCheckbox), for: .touchUpInside)
+        cell.isOnlinecheckbox.changeCheckBoxSelectedState()
     }
     
     @objc private func onOnlineCheckbox(sender:UIButton) {
         sender.isSelected = !sender.isSelected
         isOnlineMeeting = sender.isSelected
-        
+        sender.changeCheckBoxSelectedState()
     }
 }
 
@@ -377,7 +403,8 @@ extension CreateOfferTableViewController { //expiration
         updateExpireDate()
     }
     
-    private func updateExpireDate() {
+    func updateExpireDate() {
+        print("expire date \(Date.getScheduleDisplayFormat(date: expireDate))")
         if let cell = tableView.cellForRow(at: OfferRowIndex.getCell(row: .Expiration)) as? COExpirationCell {
             cell.btnExpiry.setTitle(Date.getScheduleDisplayFormat(date: expireDate), for: .normal)
         }
@@ -395,7 +422,7 @@ extension CreateOfferTableViewController:OffersImageDelegate,UIImagePickerContro
             return oI.index == image.index
         }
     }    
-
+    
     func initializeOfferImages(cell:OffersImagesCell) {
         cell.mListener = self
     }
